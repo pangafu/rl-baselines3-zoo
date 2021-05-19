@@ -653,6 +653,7 @@ class ExperimentManager(object):
         if self.verbose > 0:
             print(f"Sampler: {self.sampler} - Pruner: {self.pruner}")
 
+        optuna.logging.set_verbosity(optuna.logging.DEBUG)
         study = optuna.create_study(
             sampler=sampler,
             pruner=pruner,
