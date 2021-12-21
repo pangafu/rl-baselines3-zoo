@@ -32,9 +32,6 @@ def main():  # noqa: C901
         "--load-best", action="store_true", default=False, help="Load best model instead of last model if available"
     )
     parser.add_argument(
-        "--load-checkpoint-last", action="store_true", default=False, help="Load last checkpoint model if available"
-    )
-    parser.add_argument(
         "--load-checkpoint",
         type=int,
         help="Load checkpoint instead of last model if available, "
@@ -93,17 +90,6 @@ def main():  # noqa: C901
         model_path = os.path.join(log_path, f"rl_model_{args.load_checkpoint}_steps.zip")
         found = os.path.isfile(model_path)
 
-    if args.load_checkpoint_last:
-        file_list = os.listdir(log_path)
-        file_list.sort(key=lambda fn:os.path.getmtime(os.path.join(log_path, fn)))
-        last_model_file = ""
-        for fn in file_list:
-            if ".zip" in fn:
-                last_model_file = fn
-        print("last model file is: {}".format(last_model_file))
-
-        model_path = os.path.join(log_path, last_model_file)
-        found = os.path.isfile(model_path)
     if not found:
         raise ValueError(f"No model found for {algo} on {env_id}, path: {model_path}")
 
